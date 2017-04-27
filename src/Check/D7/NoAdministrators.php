@@ -46,12 +46,16 @@ class NoAdministrators extends Check {
     foreach ($role_list as $role) {
       // We need to check if there is a role called 'administrator', as this could
       // be different from 'user_admin_role'.
-      if ($role['label'] === 'administrator') {
+      if (isset($role['label']) && $role['label'] === 'administrator') {
+        $this->adminRolesRids[] = (int) $role['rid'];
+      }
+      // Sometimes the key is 'role'.
+      if (isset($role['role']) && $role['role'] === 'administrator') {
         $this->adminRolesRids[] = (int) $role['rid'];
       }
       // Find out the role name of the role ID defined in 'user_admin_role'.
       if ($role['rid'] === $this->adminRolesRids[0]) {
-        $this->adminRolesNames[] = $role['label'];
+        $this->adminRolesNames[] = isset($role['label']) ? $role['label'] : $role['role'];
       }
     }
 
