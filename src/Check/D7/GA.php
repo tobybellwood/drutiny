@@ -37,7 +37,7 @@ class GA extends Check {
     $this->setToken('googleanalytics_codesnippet_after', $googleanalytics_codesnippet_after);
 
     $errors = [];
-    $pattern = $this->getOption('account', '^UA-\d{7,8}-\d{1,2}$');
+    $pattern = $this->getOption('account', '^UA-\d{7,9}-\d{1,2}$');
     if (!preg_match("#${pattern}#", $googleanalytics_account)) {
       $errors[] = 'Account does not match pattern - <code>googleanalytics_account</code> is set to <code>' . $googleanalytics_account . '</code>';
     }
