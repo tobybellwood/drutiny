@@ -75,6 +75,8 @@ checks :
   \Drutiny\Check\D7\Search404 : {}
   \Drutiny\Check\D7\CronHasRun : {}
   \Drutiny\Check\D7\CronPoorMans : {}
+  \Drutiny\Check\D7\AcquiaSearchDisableAutoSwitch : {}
+  \Drutiny\Check\D7\InstallTask : {}
   \Drutiny\Check\D7\DateDefaultTimezone :
     timezone_whitelist :
       - 'Australia/Adelaide'
