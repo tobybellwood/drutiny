@@ -1,5 +1,5 @@
 {
-    "name": "seanhamlin/drutiny",
+    "name": "drutiny/drutiny",
     "type": "library",
     "description": "This is a generic Drupal 7 and Drupal 8 site auditing and optional remediation tool.",
     "keywords": ["drupal", "audit", "drush", "ssh", "report"],
@@ -9,8 +9,8 @@
         {"name": "Josh Waihi", "email": "joshwaihi@gmail.com"}
     ],
     "support": {
-        "issues": "https://github.com/seanhamlin/drutiny/issues",
-        "source": "https://github.com/seanhamlin/drutiny"
+        "issues": "https://github.com/drutiny/drutiny/issues",
+        "source": "https://github.com/drutiny/drutiny"
     },
     "require": {
         "symfony/console": "^3.1",
