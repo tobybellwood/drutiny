@@ -3,6 +3,7 @@
 namespace Drutiny\Driver;
 
 use Symfony\Component\Yaml\Yaml;
+use Symfony\Component\Process\Exception\ProcessFailedException;
 
 /**
  *
@@ -23,7 +24,14 @@ trait DrushTrait {
     // E.g. PmInfo will become pm-info.
     preg_match_all('/((?:^|[A-Z])[a-z]+)/', $method, $matches);
     $method = implode('-', array_map('strtolower', $matches[0]));
-    $output = $this->runCommand($method, $args);
+    try {
+      $output = $this->runCommand($method, $args);
+    }
+    catch (ProcessFailedException $e) {
+      $this->sandbox()->logger()->warning($e->getProcess()->getOutput());
+      throw new DrushFormatException("Drush command failed.", $e->getProcess()->getOutput());
+    }
+
     if (in_array("--format='json'", $this->drushOptions)) {
       if (!$json = json_decode($output, TRUE)) {
         throw new DrushFormatException("Cannot parse json output from drush: $output", $output);
@@ -142,7 +150,7 @@ trait DrushTrait {
    * This function takes PHP in this execution scope (Closure) and executes it
    * against the Drupal target using Drush php-script.
    */
-  public function evaluate(\Closure $callback, Array $args) {
+  public function evaluate(\Closure $callback, Array $args = []) {
     $args = array_values($args);
     $func = new \ReflectionFunction($callback);
     $filename = $func->getFileName();
