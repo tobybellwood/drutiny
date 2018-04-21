@@ -25,8 +25,10 @@ class ThemePhpLint extends Check {
   public function check() {
     $root = $this->context->drush->getCoreStatus('root');
     $site = $this->context->drush->getCoreStatus('site');
+    $themes = $this->context->drush->getCoreStatus('themes');
+    $theme = $this->context->drush->getCoreStatus('theme');
     // Find . -type f -name '*.php' -exec php -l {} \; | grep -v "No syntax errors detected".
-    $command = "find {$root}/{$site}/themes/site/ -type f -name '*.php' -exec php -l {} \; || echo 'nope'";
+    $command = "find {$root}/{$themes}/ -type f -name '*.php' -exec php -l {} \; || echo 'nope'";
     $output = (string) $this->context->remoteExecutor->execute($command);
 
     // The ACSF site can have no custom theme repo linked, in which case we

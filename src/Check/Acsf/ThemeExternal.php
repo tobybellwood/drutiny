@@ -8,16 +8,16 @@ use Drutiny\Executor\DoesNotApplyException;
 
 /**
  * @Drutiny\Annotation\CheckInfo(
- *  title = "ACSF theme security",
+ *  title = "ACSF theme external resources",
  *  description = "Some basic checks to ensure that the theme is not doing any seriously bad things. Note this is not supposed to be perfect, but used as an aid in code review.",
- *  remediation = "Look to shift the functionality to a module, and get it out of the theme.",
- *  success = "No security issues found.",
- *  failure = "Security issue:plural :prefix found - <ul><li><code>:issues</code></li></ul>",
- *  exception = "Could not determine theme security.",
+ *  remediation = "Carefully consider whether to trust the source of the external script.",
+ *  success = "No external scripts found in the theme.",
+ *  failure = "External Script:plural :prefix found - <ul><li><code>:issues</code></li></ul>",
+ *  exception = "Could not determine external scripts in the theme.",
  *  not_available = "No custom theme is linked.",
  * )
  */
-class ThemeSecurity extends Check {
+class ThemeExternal extends Check {
 
   /**
    *
@@ -27,22 +27,15 @@ class ThemeSecurity extends Check {
     $site = $this->context->drush->getCoreStatus('site');
     $themes = $this->context->drush->getCoreStatus('themes');
     $theme = $this->context->drush->getCoreStatus('theme');
-
+    
     $look_out_for = [
-      "_POST",
-      "exec(",
-      "db_query",
-      "db_select",
-      "db_merge",
-      "db_update",
-      "db_write_record",
-      "->query",
-      "drupal_http_request",
-      "curl_init",
-      "passthru",
-      "proc_open",
-      "system(",
-      "sleep(",
+        "preconnect",
+        "javascript\[",
+        "crossorigin",
+        "external",
+        "script defer src",
+//        "javascript['misc",
+//        "<link rel=\"preconnect\"",
     ];
 
     // This command is probably more complex then it should be due to wanting to

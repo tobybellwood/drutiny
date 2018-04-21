@@ -23,6 +23,10 @@ class CoreStatus {
   protected $ssh_options;
   protected $root;
   protected $site;
+  protected $theme;
+  protected $themes;
+  
+  
 
   /**
    *
@@ -38,6 +42,9 @@ class CoreStatus {
     $this->uri = $this->core_status->uri;
     $this->root = $this->core_status->root;
     $this->site = $this->core_status->site;
+    $this->theme = $this->core_status->theme;
+    $this->themes = $this->core_status->themes;
+    
     $this->ssh_options = isset($this->site_alias['ssh-options']) ? $this->site_alias['ssh-options'] : '';
     $this->primary_web = $this->site_alias['remote-host'];
     $this->remote_user = $this->site_alias['remote-user'];
@@ -120,6 +127,20 @@ class CoreStatus {
    */
   public function getRoot() {
     return $this->root;
+  }
+
+  /**
+   * @return mixed
+   */
+  public function getTheme() {
+    return $this->theme;
+  }
+  
+  /**
+   * @return mixed
+   */
+  public function getThemes() {
+    return $this->themes;
   }
 
   /**
